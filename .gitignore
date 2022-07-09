@@ -1,1 +1,4 @@
 Backend/env
+
+*.db
+*.pyc
