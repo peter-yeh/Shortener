@@ -1,6 +1,7 @@
 import sqlite3
 from hashids import Hashids
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, request, flash, redirect, url_for, jsonify
+from flask_cors import CORS
 
 
 def get_db_connection():
@@ -10,6 +11,7 @@ def get_db_connection():
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '62e8f6980b724f83f2bb4a'
+CORS(app)
 
 hashids = Hashids(min_length=4, salt=app.config['SECRET_KEY'])
 
@@ -33,9 +35,9 @@ def index():
         hashid = hashids.encode(url_id)
         short_url = request.host_url + hashid
 
-        return render_template('index.html', short_url=short_url)
+        return short_url
 
-    return render_template('index.html')
+    return 'OK'
 
 @app.route('/<id>')
 def url_redirect(id):
@@ -73,4 +75,4 @@ def stats():
         url['short_url'] = request.host_url + hashids.encode(url['id'])
         urls.append(url)
 
-    return render_template('stats.html', urls=urls)
+    return jsonify(urls), 222
