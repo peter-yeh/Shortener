@@ -15,32 +15,29 @@ CORS(app)
 
 hashids = Hashids(min_length=4, salt=app.config['SECRET_KEY'])
 
-@app.route('/', methods=('GET', 'POST'))
-def index():
+@app.route('/add/<url>')
+def add_url(url):
     conn = get_db_connection()
 
-    if request.method == 'POST':
-        url = request.form['url']
+    if not url:
+        flash('The URL is required!')
+        return redirect(url_for('index'))
 
-        if not url:
-            flash('The URL is required!')
-            return redirect(url_for('index'))
+    url_data = conn.execute('INSERT INTO urls (original_url) VALUES (?)',
+                            (url,))
+    conn.commit()
+    conn.close()
 
-        url_data = conn.execute('INSERT INTO urls (original_url) VALUES (?)',
-                                (url,))
-        conn.commit()
-        conn.close()
+    url_id = url_data.lastrowid
+    hashid = hashids.encode(url_id)
+    short_url = request.host_url + hashid
+    return jsonify(short_url)
 
-        url_id = url_data.lastrowid
-        hashid = hashids.encode(url_id)
-        short_url = request.host_url + hashid
-
-        return short_url
-
-    return 'OK'
 
 @app.route('/<id>')
 def url_redirect(id):
+    print('Calling redirect')
+    print(id)
     conn = get_db_connection()
 
     original_id = hashids.decode(id)
@@ -50,6 +47,7 @@ def url_redirect(id):
                                 ' WHERE id = (?)', (original_id,)
                                 ).fetchone()
         original_url = url_data['original_url']
+        print('run till here')
         clicks = url_data['clicks']
 
         conn.execute('UPDATE urls SET clicks = ? WHERE id = ?',
@@ -57,7 +55,9 @@ def url_redirect(id):
 
         conn.commit()
         conn.close()
-        return redirect(original_url)
+        link = 'https://' + original_url
+        print(link)
+        return redirect('https://' + original_url)
     else:
         flash('Invalid URL')
         return redirect(url_for('index'))
