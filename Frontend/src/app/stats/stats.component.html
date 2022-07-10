@@ -1,14 +1,4 @@
 <div>
-    <p>stats works!</p>
-    <ul>
-        <li *ngFor="let url of urlsList">
-            {{url.id}}
-            {{url.createdAt}}
-            {{url.original_url}}
-            {{url.short_url}}
-            {{url.clicks}}
-        </li>
-    </ul>
     <h1>Shortener Statistics</h1>
     <table class="table">
         <thead>
@@ -17,19 +7,15 @@
                 <th scope="col">Short</th>
                 <th scope="col">Original</th>
                 <th scope="col">Clicks</th>
-                <th scope="col">Creation Date</th>
             </tr>
         </thead>
-        <tbody>
-            {% for url in urls %}
+        <tbody *ngFor="let url of urlsList">
             <tr>
-                <th scope="row">{{ url['id'] }}</th>
-                <td>{{ url['short_url'] }}</td>
-                <td>{{ url['original_url'] }}</td>
-                <td>{{ url['clicks'] }}</td>
-                <td>{{ url['created'] }}</td>
+                <th scope="row">{{url.id}}</th>
+                <td>{{ url.short_url}}</td>
+                <td>{{ url.original_url}}</td>
+                <td>{{ url.clicks }}</td>
             </tr>
-            {% endfor %}
         </tbody>
     </table>
 

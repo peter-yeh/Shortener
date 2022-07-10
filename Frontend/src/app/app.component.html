@@ -18,10 +18,34 @@
 
   <div ng-if="!urlShorten">
     <h3>
-      Your shorten link is:
+      Your shortened link is:
       <a href={{urlShorten}} target="_blank"> {{urlShorten}}</a>
     </h3>
   </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <h1>Shortener Statistics</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Short</th>
+        <th scope="col">Original</th>
+        <th scope="col">Clicks</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let url of urlsList">
+      <tr>
+        <th scope="row">{{url.id}}</th>
+        <a href={{url.short_url}} target="_blank">{{url.short_url}}</a>
+        <td>{{ url.original_url}}</td>
+        <td>{{ url.clicks }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
     <title>Gray Clouds Background</title>
