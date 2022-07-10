@@ -1,15 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UrlsApiService } from '../../model/urls-api.service';
+import { Url } from '../../model/url.model';
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.css']
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, OnDestroy {
+  constructor(private urlsApi: UrlsApiService) { }
 
-  constructor() { }
+  urlsListSubs: Subscription = Subscription.EMPTY;
+  urlsList: Url[] = [];
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.urlsListSubs = this.urlsApi
+      .getUrls()
+      .subscribe(res => {
+        this.urlsList = res;
+      },
+        console.error
+      );
+  }
+
+  ngOnDestroy() {
+    this.urlsListSubs.unsubscribe();
   }
 
 }
