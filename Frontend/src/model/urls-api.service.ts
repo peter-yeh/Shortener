@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { API_URL } from '../../env';
 import { Url } from './url.model';
 
@@ -16,9 +15,9 @@ export class UrlsApiService {
     }
 
     // GET list of public, future events
-    getUrls(): Observable<any> {
+    getUrls(): Observable<Url[]> {
         return this.http
-            .get(`${API_URL}/stats`);
+            .get<Url[]>(`${API_URL}/stats`);
     }
 
     addUrl(url: string): Observable<string> {
