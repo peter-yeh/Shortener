@@ -20,4 +20,9 @@ export class UrlsApiService {
         return this.http
             .get(`${API_URL}/stats`);
     }
+
+    addUrl(url: string): Observable<string> {
+        return this.http.post<string>(`${API_URL}/add`, { url: url });
+    }
+
 }

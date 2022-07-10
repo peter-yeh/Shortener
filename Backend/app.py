@@ -15,9 +15,11 @@ CORS(app)
 
 hashids = Hashids(min_length=4, salt=app.config['SECRET_KEY'])
 
-@app.route('/add/<url>')
-def add_url(url):
+
+@app.route('/add', methods = ['POST'])
+def add_url():
     conn = get_db_connection()
+    url = request.json.get('url')
 
     if not url:
         flash('The URL is required!')
@@ -31,8 +33,7 @@ def add_url(url):
     url_id = url_data.lastrowid
     hashid = hashids.encode(url_id)
     short_url = request.host_url + hashid
-    return jsonify(short_url)
-
+    return jsonify(short_url), 200
 
 @app.route('/<id>')
 def url_redirect(id):
@@ -52,7 +53,7 @@ def url_redirect(id):
 
         conn.commit()
         conn.close()
-        return redirect('https://' + original_url)
+        return redirect(original_url)
     else:
         flash('Invalid URL')
         return redirect(url_for('index'))
@@ -70,4 +71,4 @@ def stats():
         url['short_url'] = request.host_url + hashids.encode(url['id'])
         urls.append(url)
 
-    return jsonify(urls), 222
+    return jsonify(urls), 200

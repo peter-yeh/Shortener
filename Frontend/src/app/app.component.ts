@@ -13,7 +13,9 @@ export class AppComponent implements OnInit, OnDestroy {
   inputString = '';
 
   urlsListSubs: Subscription = Subscription.EMPTY;
+  urlShortenSubs: Subscription = Subscription.EMPTY;
   urlsList: Url[] = [];
+  urlShorten: string = '';
 
   constructor(private urlsApi: UrlsApiService) {
   }
@@ -45,7 +47,14 @@ export class AppComponent implements OnInit, OnDestroy {
       // can show toast message if no input
       return;
     }
-    // this.urlsApi.addUrl(this.inputString);
+
+    this.urlShortenSubs = this.urlsApi
+      .addUrl(this.inputString)
+      .subscribe(res => {
+        this.urlShorten = res;
+      },
+        console.error
+      );
     // show toast message for success
   }
 }
