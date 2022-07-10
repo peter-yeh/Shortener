@@ -36,8 +36,6 @@ def add_url(url):
 
 @app.route('/<id>')
 def url_redirect(id):
-    print('Calling redirect')
-    print(id)
     conn = get_db_connection()
 
     original_id = hashids.decode(id)
@@ -47,7 +45,6 @@ def url_redirect(id):
                                 ' WHERE id = (?)', (original_id,)
                                 ).fetchone()
         original_url = url_data['original_url']
-        print('run till here')
         clicks = url_data['clicks']
 
         conn.execute('UPDATE urls SET clicks = ? WHERE id = ?',
@@ -55,8 +52,6 @@ def url_redirect(id):
 
         conn.commit()
         conn.close()
-        link = 'https://' + original_url
-        print(link)
         return redirect('https://' + original_url)
     else:
         flash('Invalid URL')

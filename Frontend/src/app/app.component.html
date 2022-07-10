@@ -10,7 +10,8 @@
     <h1>Welcome to URL Shortener</h1>
     <h3>Please Enter the URL you want to shorten</h3>
 
-    <input class="input" matInput type="email" matInput placeholder="www.google.com">
+    <input class="input" matInput type="text" matInput (input)="onInputChange($event)" placeholder="
+      Link to shorten">
 
     <button class="button" mat-raised-button (click)="onClick()">Shorten!</button>
   </div>

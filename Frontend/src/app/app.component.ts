@@ -32,11 +32,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.urlsListSubs.unsubscribe();
   }
 
+  onInputChange(event: any) {
+    if (!(event.target.value as string)) {
+      // show toast message if no input
+      return;
+    }
+    this.inputString = event.target.value as string;
+  }
+
   onClick() {
     if (!this.inputString) {
       // can show toast message if no input
       return;
     }
-    console.log("Clicked");
+    // this.urlsApi.addUrl(this.inputString);
+    // show toast message for success
   }
 }
