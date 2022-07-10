@@ -15,6 +15,11 @@ p {
     flex: 1;
 }
 
+.toolbarText {
+    color: #fafafa;
+    padding: 0.5rem;
+}
+
 .toolbar {
     position: absolute;
     top: 0;
@@ -27,7 +32,6 @@ p {
     color: white;
     font-weight: 600;
 }
-
 
 .content {
     display: flex;
