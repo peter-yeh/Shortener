@@ -22,6 +22,8 @@ python init_db.py
 
 To start backend
 ```
+cd Backend
+# Activate env
 flask run
 ```
 

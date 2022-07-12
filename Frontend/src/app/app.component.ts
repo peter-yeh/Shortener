@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { UrlsApiService } from '../model/urls-api.service';
-import { Url } from '../model/url.model';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {UrlsApiService} from '../model/urls-api.service';
+import {Url} from '../model/url.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Frontend';
@@ -22,12 +22,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.urlsListSubs = this.urlsApi
-      .getUrls()
-      .subscribe(res => {
-        this.urlsList = res;
-      },
-        console.error
-      );
+        .getUrls()
+        .subscribe((res) => {
+          this.urlsList = res;
+        },
+        console.error,
+        );
   }
 
   ngOnDestroy() {
@@ -49,12 +49,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.urlShortenSubs = this.urlsApi
-      .addUrl(this.inputString)
-      .subscribe(res => {
-        this.urlShorten = res;
-      },
-        console.error
-      );
+        .addUrl(this.inputString)
+        .subscribe((res) => {
+          this.urlShorten = res;
+        },
+        console.error,
+        );
     // show toast message for success
   }
 }

@@ -1,9 +1,9 @@
 export class Url {
-    constructor(
+  constructor(
         public id: number,
         public createdAt: Date,
-        public original_url: string,
-        public short_url: string,
+        public originalUrl: string,
+        public shortUrl: string,
         public clicks: number,
-    ) { }
+  ) { }
 }

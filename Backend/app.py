@@ -25,15 +25,15 @@ def add_url():
         flash('The URL is required!')
         return redirect(url_for('index'))
 
-    url_data = conn.execute('INSERT INTO urls (original_url) VALUES (?)',
+    url_data = conn.execute('INSERT INTO urls (originalUrl) VALUES (?)',
                             (url,))
     conn.commit()
     conn.close()
 
     url_id = url_data.lastrowid
     hashid = hashids.encode(url_id)
-    short_url = request.host_url + hashid
-    return jsonify(short_url), 200
+    shortUrl = request.host_url + hashid
+    return jsonify(shortUrl), 200
 
 @app.route('/<id>')
 def url_redirect(id):
@@ -42,10 +42,10 @@ def url_redirect(id):
     original_id = hashids.decode(id)
     if original_id:
         original_id = original_id[0]
-        url_data = conn.execute('SELECT original_url, clicks FROM urls'
+        url_data = conn.execute('SELECT originalUrl, clicks FROM urls'
                                 ' WHERE id = (?)', (original_id,)
                                 ).fetchone()
-        original_url = url_data['original_url']
+        originalUrl = url_data['originalUrl']
         clicks = url_data['clicks']
 
         conn.execute('UPDATE urls SET clicks = ? WHERE id = ?',
@@ -53,7 +53,7 @@ def url_redirect(id):
 
         conn.commit()
         conn.close()
-        return redirect(original_url)
+        return redirect(originalUrl)
     else:
         flash('Invalid URL')
         return redirect(url_for('index'))
@@ -61,14 +61,14 @@ def url_redirect(id):
 @app.route('/stats')
 def stats():
     conn = get_db_connection()
-    db_urls = conn.execute('SELECT id, created, original_url, clicks FROM urls'
+    db_urls = conn.execute('SELECT id, created, originalUrl, clicks FROM urls'
                            ).fetchall()
     conn.close()
 
     urls = []
     for url in db_urls:
         url = dict(url)
-        url['short_url'] = request.host_url + hashids.encode(url['id'])
+        url['shortUrl'] = request.host_url + hashids.encode(url['id'])
         urls.append(url)
 
     return jsonify(urls), 200
