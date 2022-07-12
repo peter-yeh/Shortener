@@ -11,6 +11,7 @@
 ## Backend
 Run on initialization
 ```
+cd Backend
 python -m venv env
 source env/bin/activate # Linux
 ./env/Scripts/activate # For Windows
@@ -26,7 +27,7 @@ flask run
 
 Helpful commands
 ```
-pip install flask smth...
+pip install <Package Name>
 pip freeze > requirements.txt
 ```
 
