@@ -33,11 +33,29 @@ p {
     font-weight: 600;
 }
 
+caption {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: left;
+    color: #333;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+}
+
 .content {
     display: flex;
     margin: 82px auto 32px;
     padding: 0 16px;
-    max-width: 960px;
+    width: auto;
     flex-direction: column;
     align-items: center;
 }
