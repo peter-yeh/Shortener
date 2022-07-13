@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {UrlsApiService} from '../model/urls-api.service';
 import {Url} from '../model/url.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   urlsList: Url[] = [];
   urlShorten: string = '';
 
-  constructor(private urlsApi: UrlsApiService) {
+  constructor(private urlsApi: UrlsApiService, private toast: ToastrService) {
   }
 
   ngOnInit() {
@@ -25,9 +26,9 @@ export class AppComponent implements OnInit, OnDestroy {
         .getUrls()
         .subscribe((res) => {
           this.urlsList = res;
-        },
-        console.error,
-        );
+          this.toast.success('Loaded shortened link');
+          this.urlShorten = this.urlsList[this.urlsList.length - 1].shortUrl;
+        });
   }
 
   ngOnDestroy() {
@@ -35,16 +36,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onInputChange(event: any) {
-    if (!(event.target.value as string)) {
-      // show toast message if no input
-      return;
-    }
+    if (!(event.target.value as string)) return;
     this.inputString = event.target.value as string;
   }
 
   onClick() {
     if (!this.inputString) {
-      // can show toast message if no input
+      this.toast.error('Text Field Cannot Be Empty');
       return;
     }
 
@@ -52,9 +50,10 @@ export class AppComponent implements OnInit, OnDestroy {
         .addUrl(this.inputString)
         .subscribe((res) => {
           this.urlShorten = res;
+          this.toast.success('Loaded shortened link');
         },
-        console.error,
-        );
-    // show toast message for success
+        (error) => {
+          this.toast.error('Server Error');
+        });
   }
 }
