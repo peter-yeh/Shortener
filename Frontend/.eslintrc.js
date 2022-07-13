@@ -21,5 +21,6 @@ module.exports = {
       'ignorePattern': '^import\\s.+\\sfrom\\s.+;$',
       'ignoreUrls': true,
     }],
+    'linebreak-style': ['error', 'windows'],
   },
 };
