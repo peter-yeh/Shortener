@@ -1,10 +1,16 @@
 # URL Shortener
+
+## Features
+- Backend -> Flask
+- Frontend -> Angular
+- Database -> Sqlite3
+- Deployed on -> https://intelligent-monsieur-10324.herokuapp.com/
+
+
 ## Installation
 | | Version |
 | --- | --- |
 | Python | 3.10.5 |
-| Flask | 2.1.2 |
-| Werkzeug | 2.1.2 |
 | NodeJs | 16.16.0 |
 | NPM | 8.11.0 |
 
@@ -41,7 +47,7 @@ ng serve // Goto http://localhost:4200/
 ```
 
 ## Heroku
-Hosted on: https://quiet-depths-37968.herokuapp.com/
+Hosted on: https://intelligent-monsieur-10324.herokuapp.com/
 However, as sqlite3 is supported by herokuapp, I am unable to test this.
 
 Push only the backend folder into heroku
