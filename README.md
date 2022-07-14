@@ -39,3 +39,10 @@ npm install
 ng serve // Goto http://localhost:4200/
 
 ```
+
+## Heroku
+Hosted on: https://quiet-depths-37968.herokuapp.com/
+However, as sqlite3 is supported by herokuapp, I am unable to test this.
+
+Push only the backend folder into heroku
+`git subtree push --prefix Backend/ heroku main`
