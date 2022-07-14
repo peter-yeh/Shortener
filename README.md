@@ -39,3 +39,7 @@ npm install
 ng serve // Goto http://localhost:4200/
 
 ```
+
+## Heroku
+Push only the backend folder into heroku
+`git subtree push --prefix Backend/ heroku main`
