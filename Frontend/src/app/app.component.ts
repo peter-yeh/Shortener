@@ -18,17 +18,10 @@ export class AppComponent implements OnInit, OnDestroy {
   urlsList: Url[] = [];
   urlShorten: string = '';
 
-  constructor(private urlsApi: UrlsApiService, private toast: ToastrService) {
-  }
+  constructor(private urlsApi: UrlsApiService, private toast: ToastrService) { }
 
   ngOnInit() {
-    this.urlsListSubs = this.urlsApi
-        .getUrls()
-        .subscribe((res) => {
-          this.urlsList = res;
-          this.toast.success('Loaded shortened link');
-          this.urlShorten = this.urlsList[this.urlsList.length - 1].shortUrl;
-        });
+    this.updateUrlList();
   }
 
   ngOnDestroy() {
@@ -50,10 +43,21 @@ export class AppComponent implements OnInit, OnDestroy {
         .addUrl(this.inputString)
         .subscribe((res) => {
           this.urlShorten = res;
-          this.toast.success('Loaded shortened link');
+          this.toast.success('Link shortened!');
+          this.updateUrlList();
         },
         (error) => {
           this.toast.error('Server Error');
+        });
+  }
+
+  updateUrlList() {
+    this.urlsListSubs = this.urlsApi
+        .getUrls()
+        .subscribe((res) => {
+          this.urlsList = res;
+          this.toast.success('Loaded shortened link');
+          this.urlShorten = this.urlsList[this.urlsList.length - 1].shortUrl;
         });
   }
 }
