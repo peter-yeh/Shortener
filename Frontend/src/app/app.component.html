@@ -34,6 +34,7 @@
         <th scope="col">Short</th>
         <th scope="col">Original</th>
         <th scope="col">Clicks</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody *ngFor="let url of urlsList">
@@ -42,6 +43,7 @@
         <a href={{url.shortUrl}} target="_blank">{{url.shortUrl}}</a>
         <td>{{ url.originalUrl}}</td>
         <td>{{ url.clicks }}</td>
+        <button class="button" mat-raised-button (click)="onClickDelete(url.id)">Delete!</button>
       </tr>
     </tbody>
   </table>

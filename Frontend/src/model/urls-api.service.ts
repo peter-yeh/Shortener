@@ -22,4 +22,8 @@ export class UrlsApiService {
   addUrl(url: string): Observable<string> {
     return this.http.post<string>(`${API_URL}/add`, {url: url});
   }
+
+  deleteUrl(id: number): Observable<string> {
+    return this.http.post<string>(`${API_URL}/delete`, {id: id});
+  }
 }

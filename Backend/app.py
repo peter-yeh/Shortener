@@ -82,15 +82,17 @@ def stats():
 
 
 # Expects id of the row we want to delete
-@app.route('/delete/<id>')
-def delete_url(id):
+@app.route('/delete', methods = ['POST'])
+def delete_url():
+    id = request.json.get('id')
+
     conn = get_db_connection()
     try:
-        conn.execute('DELETE FROM urls WHERE id = (?)', (id))
-    except:
+        conn.execute('DELETE FROM urls WHERE id = (?)', (id,))
+    except Exception as err:
         conn.close()
-        return jsonify('Entry does not exist'), 400
-        
+        return jsonify(repr(err)), 400
+
     conn.commit()
     conn.close()
 
