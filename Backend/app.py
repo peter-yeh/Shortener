@@ -79,3 +79,19 @@ def stats():
         urls.append(url)
 
     return jsonify(urls), 200
+
+
+# Expects id of the row we want to delete
+@app.route('/delete/<id>')
+def delete_url(id):
+    conn = get_db_connection()
+    try:
+        conn.execute('DELETE FROM urls WHERE id = (?)', (id))
+    except:
+        conn.close()
+        return jsonify('Entry does not exist'), 400
+        
+    conn.commit()
+    conn.close()
+
+    return jsonify('Deleted entry'), 200
