@@ -51,6 +51,14 @@ export class AppComponent implements OnInit, OnDestroy {
         });
   }
 
+  onClickDelete(id:number) {
+    console.log(id);
+    this.urlsApi.deleteUrl(id).subscribe((res) => {
+      this.toast.success('Deleted row with id: ' + id);
+      this.updateUrlList();
+    }, (err) => this.toast.error(err.error));
+  }
+
   updateUrlList() {
     this.urlsListSubs = this.urlsApi
         .getUrls()
